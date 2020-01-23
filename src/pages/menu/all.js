@@ -1,7 +1,23 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Link } from "gatsby"
 
 import Layout from "../../components/layout"
+import Table, { RowContext } from "../../components/table"
+
+const data = [
+  {
+    englishName: "Chicken roll",
+    arabicName: "ملفوف دجاج",
+    category: "Western",
+    cost: "13.00",
+  },
+  {
+    englishName: "Chicken roll",
+    arabicName: "ملفوف دجاج",
+    category: "Western",
+    cost: "13.00",
+  },
+]
 
 const Menu = props => {
   return (
@@ -12,47 +28,12 @@ const Menu = props => {
         <Link to="/menu/new">Add new meal</Link>
         <br />
         <Link to="/menu/upload">Upload Excel file</Link>
-        <table>
-          <thead>
-            <th>Meal name</th>
-            <th>اسم الوجبة</th>
-            <th>Category</th>
-            <th>Cost</th>
-            <th>Actions</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <Link to="/menu/meal">Chicken roll</Link>
-              </td>
-              <td>
-                <Link to="/menu/meal">دجاج ملفوف</Link>
-              </td>
-              <td>
-                <Link to="/menu/category">western</Link>
-              </td>
-              <td>SAR 13.00</td>
-              <td>
-                <Link to="/menu/edit">Edit / Delete</Link>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <Link to="/menu/meal">Chicken roll</Link>
-              </td>
-              <td>
-                <Link to="/menu/meal">دجاج ملفوف</Link>
-              </td>
-              <td>
-                <Link to="/menu/category">western</Link>
-              </td>
-              <td>SAR 13.00</td>
-              <td>
-                <Link to="/menu/edit">Edit / Delete</Link>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <Table
+          headers={["Meal name", "اسم الوجبة", "Category", "Cost", "Actions"]}
+          data={data}
+        >
+          <TableRowData />
+        </Table>
         <Link to="/menu/consumption">
           Total material consumption for all dishes
         </Link>
@@ -77,6 +58,27 @@ const Filter = props => {
         <option>Highest</option>
       </select>
     </form>
+  )
+}
+
+const TableRowData = props => {
+  const row = useContext(RowContext)
+  return (
+    <tr>
+      <td>
+        <Link to="/menu/meal">{row.englishName}</Link>
+      </td>
+      <td>
+        <Link to="/menu/meal">{row.arabicName}</Link>
+      </td>
+      <td>
+        <Link to="/menu/category">{row.category}</Link>
+      </td>
+      <td>SAR {row.cost}</td>
+      <td>
+        <Link to="/menu/edit">Edit / Delete</Link>
+      </td>
+    </tr>
   )
 }
 

@@ -1,7 +1,28 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Link } from "gatsby"
 
 import Layout from "../../components/layout"
+import Table, { RowContext } from "../../components/table"
+
+const data = {
+  excelFiles: [
+    {
+      filename: "spreadsheet-250010",
+      uploadedBy: "Mohamed Ahmed",
+      uploadedAt: "10/1/2020",
+    },
+    {
+      filename: "spreadsheet-250015",
+      uploadedBy: "Mohamed Ahmed",
+      uploadedAt: "15/1/2020",
+    },
+    {
+      filename: "spreadsheet-250020",
+      uploadedBy: "Mohamed Ahmed",
+      uploadedAt: "20/1/2020",
+    },
+  ],
+}
 
 const Upload = props => {
   return (
@@ -10,35 +31,29 @@ const Upload = props => {
         <h1>Upload Excel Sheet</h1>
         <input type="file" placeholder="Upload your file" />
         <h2>List of uploaded files</h2>
-        <table>
-          <thead>
-            <th>File name</th>
-            <th>Uploaded by</th>
-            <th>Uploaded at</th>
-            <th>Actions</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>spreadsheet-250010</td>
-              <td>Mohamed Ahmed</td>
-              <td>10/1/2020</td>
-              <td>
-                <button>Delete File</button>
-              </td>
-            </tr>
-            <tr>
-              <td>spreadsheet-250025</td>
-              <td>Mohamed Ahmed</td>
-              <td>20/1/2020</td>
-              <td>
-                <button>Delete File</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <Table
+          headers={["File name", "Uploaded by", "Uploaded at", "Actions"]}
+          data={data.excelFiles}
+        >
+          <TableRowData />
+        </Table>
         <Link to="/menu/all">Menu</Link>
       </div>
     </Layout>
+  )
+}
+
+const TableRowData = props => {
+  const row = useContext(RowContext)
+  return (
+    <tr>
+      <td>{row.filename}</td>
+      <td>{row.uploadedBy}</td>
+      <td>{row.uploadedAt}</td>
+      <td>
+        <button>Delete File</button>
+      </td>
+    </tr>
   )
 }
 

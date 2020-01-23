@@ -1,46 +1,65 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Link } from "gatsby"
 
 import Layout from "../../components/layout"
+import Table, { RowContext } from "../../components/table"
+import Select from "../../components/select"
+
+const data = {
+  excelFiles: ["file-10/1/2020", "file-15/1/2020"],
+  period: "1/1/2020 - 31/1/2020",
+  category: "western",
+  info: [
+    {
+      ingredient: "Chicken",
+      sold: 10,
+      consumption: 5,
+      unit: "pcs",
+    },
+    {
+      ingredient: "Plate of rice",
+      sold: 10,
+      consumption: 1000,
+      unit: "gm",
+    },
+    {
+      ingredient: "Bread",
+      sold: 10,
+      consumption: 10,
+      unit: "pcs",
+    },
+  ],
+}
 
 const Category = props => {
   return (
     <Layout>
       <div>
-        <h1>Material Consumption for Western Category</h1>
-        <select>
-          <option>According to Excel sheet</option>
-          <option>file-10/1/2020</option>
-          <option>file-15/1/2020</option>
-        </select>
-        <h2>Ingrediants:</h2>
-        <table>
-          <thead>
-            <th>Ingrediant</th>
-            <th>Sold</th>
-            <th>Total material consumption</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Chicken</td>
-              <td>10</td>
-              <td>5</td>
-            </tr>
-            <tr>
-              <td>Plate of rice</td>
-              <td>10</td>
-              <td>1000 gm</td>
-            </tr>
-            <tr>
-              <td>Bread</td>
-              <td>10</td>
-              <td>10 pcs</td>
-            </tr>
-          </tbody>
-        </table>
+        <h1>Material Consumption for {data.category} Category</h1>
+        <Select options={data.excelFiles} />
+        <h2>Period: {data.period}</h2>
+        <Table
+          headers={["Ingredient", "Sold", "Total material consumption"]}
+          data={data.info}
+        >
+          <TableRowData />
+        </Table>
         <Link to="/menu/all">Menu</Link>
       </div>
     </Layout>
+  )
+}
+
+const TableRowData = props => {
+  const row = useContext(RowContext)
+  return (
+    <tr>
+      <td>{row.ingredient}</td>
+      <td>{row.sold}</td>
+      <td>
+        {row.consumption} {row.unit}
+      </td>
+    </tr>
   )
 }
 
